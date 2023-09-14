@@ -1,4 +1,5 @@
-﻿using Hockey.Data;
+﻿using Utils;
+using Hockey.Data;
 using System.Security.AccessControl;
 
 namespace Hockey.Data
@@ -30,7 +31,7 @@ namespace Hockey.Data
             
             set 
             {
-                if (String.IsNullOrWhiteSpace(value))
+                if (Utilities.IsNullEmptyOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Birth place cannot be null or empty.");
                 }
@@ -39,6 +40,67 @@ namespace Hockey.Data
                 
             }
             
+        }
+
+        public string FirstName
+        {
+            get
+            {
+                return _firstName;
+            }
+
+            set
+            {
+                if (Utilities.IsNullEmptyOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("First Name cannot be null or empty.");
+                }
+
+                _firstName = value;
+
+            }
+
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return _lastName;
+            }
+
+            set
+            {
+                if (Utilities.IsNullEmptyOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Last Name cannot be null or empty.");
+                }
+
+                _lastName = value;
+
+            }
+
+        }
+
+        public int WeightInPounds
+        {
+            get
+            {
+                return _weightInPounds;
+            }
+
+            set
+            {
+                if (!Utilities.IsPositive(value))
+                {
+                    throw new ArgumentException("Weight must be positive.");
+                }
+
+                _weightInPounds = value;
+
+
+            }
+
         }
 
         public int HeightInInches
@@ -50,7 +112,7 @@ namespace Hockey.Data
 
             set
             {
-                if (value <= 0)
+                if (Utilities.IsZeroOrNegative(value))
                 {
                     throw new ArgumentException("Height must be positive.");
                 }
@@ -70,7 +132,11 @@ namespace Hockey.Data
 
             set
             {
-                // TODO: update validation
+                if(Utilities.IsInTheFuture(value))
+                {
+                    throw new ArgumentException("Date of birth cannot be in the future.");
+                }
+
                 _dateOfBirth = value;
             }
         }
@@ -101,6 +167,9 @@ namespace Hockey.Data
             DateOfBirth = birthDate;
             Position = position;
             Shot = shot;
+            FirstName = firstName;
+            LastName = lastName;
+            WeightInPounds = weightInPounds;
         }
 
         // HockeyPlayer player = new HockeyPlayer("jane", "doe", "edmonton", newDateOnly(), 1, 2);
