@@ -5,7 +5,8 @@
         //Validate if string is Null/Empty/Whitespace
 
         //Expression-bodied method 
-        public static bool IsNullEmptyOrWhiteSpace(string value) => String.IsNullOrWhiteSpace(value);
+        public static bool IsNullEmptyOrWhiteSpace(string value) => 
+            String.IsNullOrWhiteSpace(value);
 
 
         //Validate if number is Zero or negative
@@ -39,7 +40,7 @@
             return value <= 0 ? true : false;
         }
 
-        public static bool IsPositive(int value) => value <= 0 ? true : false;
+        public static bool IsPositive(int value) => value <= 0 ? false : true;
 
         public static bool IsInTheFuture(DateOnly value) => value > DateOnly.FromDateTime(DateTime.Now);
     }
