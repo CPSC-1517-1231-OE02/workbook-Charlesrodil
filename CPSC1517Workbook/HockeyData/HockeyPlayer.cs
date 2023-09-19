@@ -29,7 +29,7 @@ namespace Hockey.Data
                 return _birthplace; 
             }
             
-            set 
+            private set 
             {
                 if (Utilities.IsNullEmptyOrWhiteSpace(value))
                 {
@@ -49,7 +49,7 @@ namespace Hockey.Data
                 return _firstName;
             }
 
-            set
+            private set
             {
                 if (Utilities.IsNullEmptyOrWhiteSpace(value))
                 {
@@ -69,7 +69,7 @@ namespace Hockey.Data
                 return _lastName;
             }
 
-            set
+            private set
             {
                 if (Utilities.IsNullEmptyOrWhiteSpace(value))
                 {
@@ -89,9 +89,9 @@ namespace Hockey.Data
                 return _weightInPounds;
             }
 
-            set
+            private set
             {
-                if (!Utilities.IsPositive(value))
+                if (Utilities.IsPositive(value))
                 {
                     throw new ArgumentException("Weight must be positive.");
                 }
@@ -110,7 +110,7 @@ namespace Hockey.Data
                 return _heightInInches;
             }
 
-            set
+            private set
             {
                 if (Utilities.IsZeroOrNegative(value))
                 {
@@ -145,19 +145,6 @@ namespace Hockey.Data
 
         public Shot Shot { get; set; }
 
-        // Default constructor
-        public HockeyPlayer()
-        { 
-            _firstName = string.Empty;
-            _lastName = string.Empty;
-            _birthplace= string.Empty;
-            _dateOfBirth = new DateOnly();
-            _weightInPounds = 0;
-            _heightInInches= 0;
-            Position = Position.Center;
-            Shot = Shot.Left;
-        }
-
         //Greedy constructor
 
         public HockeyPlayer(string firstName, string lastName, string birthPlace, DateOnly birthDate, int weightInPounds, int heightInInches, Position position, Shot shot)
@@ -172,7 +159,13 @@ namespace Hockey.Data
             WeightInPounds = weightInPounds;
         }
 
-        // HockeyPlayer player = new HockeyPlayer("jane", "doe", "edmonton", newDateOnly(), 1, 2);
+        // Override ToString - Displays a formatted version of the object to display comma separated value format for class fields
+        public override string ToString()
+        {
+            return $"{FirstName}, {LastName}, {BirthPlace}, {BirthPlace}, {BirthPlace}, {DateOfBirth}, {WeightInPounds}, {HeightInInches}, {Position}, {Shot}";
+        }
+
+
 
     }
 }

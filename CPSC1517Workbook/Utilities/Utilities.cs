@@ -40,7 +40,10 @@
             return value <= 0 ? true : false;
         }
 
-        public static bool IsPositive(int value) => value <= 0 ? false : true;
+        public static bool IsPositive(int value) => value > 0 ? true : false;
+        public static bool IsPositive(double value) => value > 0;
+        public static bool IsPositive(decimal value) => value > 0;
+
 
         public static bool IsInTheFuture(DateOnly value) => value > DateOnly.FromDateTime(DateTime.Now);
     }
