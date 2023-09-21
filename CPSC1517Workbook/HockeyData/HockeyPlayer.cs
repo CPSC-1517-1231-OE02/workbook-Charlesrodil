@@ -18,7 +18,7 @@ namespace Hockey.Data
         private int _heightInInches;
         private int _weightInPounds;
         private DateOnly _dateOfBirth;
-        
+        private int _jerseyNumber;
 
         //Properties
 
@@ -91,7 +91,7 @@ namespace Hockey.Data
 
             private set
             {
-                if (Utilities.IsPositive(value))
+                if (!Utilities.IsPositive(value))
                 {
                     throw new ArgumentException("Weight must be positive.");
                 }
@@ -162,9 +162,23 @@ namespace Hockey.Data
         // Override ToString - Displays a formatted version of the object to display comma separated value format for class fields
         public override string ToString()
         {
-            return $"{FirstName}, {LastName}, {BirthPlace}, {BirthPlace}, {BirthPlace}, {DateOfBirth}, {WeightInPounds}, {HeightInInches}, {Position}, {Shot}";
+            return $"{FirstName} {LastName}";
         }
 
+        public int Age => (DateOnly.FromDateTime(DateTime.Now).DayNumber - DateOfBirth.DayNumber) / 365;
+
+        public int JerseyNumber 
+        {
+            get 
+            {
+                return _jerseyNumber;
+            }
+
+            set
+            {
+                _jerseyNumber = value;
+            }
+        }
 
 
     }
