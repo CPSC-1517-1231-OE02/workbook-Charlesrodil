@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UtilitiesTestProject", "Uti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSampleApp", "BlazorSampleApp\BlazorSampleApp.csproj", "{2EE3C2E8-6ED7-4FE5-B79D-C83B2739C734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMIExercise", "BMIExercise\BMIExercise.csproj", "{57752A0E-D006-475E-94E3-574144D07253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMIExercise", "BMIExercise\BMIExercise.csproj", "{57752A0E-D006-475E-94E3-574144D07253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyMassIndexTest", "BodyMassIndexTest\BodyMassIndexTest.csproj", "{DE492E85-35B9-4E14-9552-12EB89DDF2CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodyMassIndexTest", "BodyMassIndexTest\BodyMassIndexTest.csproj", "{DE492E85-35B9-4E14-9552-12EB89DDF2CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

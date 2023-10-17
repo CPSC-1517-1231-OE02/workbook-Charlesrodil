@@ -1,4 +1,5 @@
 ﻿using Utils;
+using System.Globalization;
 using Hockey.Data;
 using System.Security.AccessControl;
 
@@ -176,7 +177,7 @@ namespace Hockey.Data
         // Override ToString - Displays a formatted version of the object to display comma separated value format for class fields
         public override string ToString()
         {
-            return $"{FirstName},{LastName},{JerseyNumber},{Position},{Shot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy")},{BirthPlace}";
+            return $"{FirstName},{LastName},{JerseyNumber},{Position},{Shot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy", CultureInfo.InvariantCulture)},{BirthPlace}";
         }
 
         public int Age => (DateOnly.FromDateTime(DateTime.Now).DayNumber - DateOfBirth.DayNumber) / 365;
@@ -190,7 +191,7 @@ namespace Hockey.Data
 
             HockeyPlayer player;
 
-            player = new HockeyPlayer(fields[0], fields[1], int.Parse(fields[2]), fields[8], DateOnly.ParseExact(fields[7], "MMM-dd-yyyy"), int.Parse(fields[6]), int.Parse(fields[5]), Enum.Parse<Position>(fields[3]), Enum.Parse<Shot>(fields[4]));
+            player = new HockeyPlayer(fields[0], fields[1], int.Parse(fields[2]), fields[8], DateOnly.ParseExact(fields[7], "MMM-dd-yyyy", CultureInfo.InvariantCulture), int.Parse(fields[6]), int.Parse(fields[5]), Enum.Parse<Position>(fields[3]), Enum.Parse<Shot>(fields[4]));
 
             return player;
         }

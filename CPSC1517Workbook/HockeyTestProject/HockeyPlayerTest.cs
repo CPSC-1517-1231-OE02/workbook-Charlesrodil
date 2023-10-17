@@ -2,6 +2,7 @@ using FluentAssertions;
 using Hockey.Data;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Globalization;
 
 namespace Hockey.Test
 {
@@ -16,8 +17,8 @@ namespace Hockey.Test
         const int JerseyNumber = 28;
         const Position PlayerPosition = Position.Center;
         const Shot PlayerShot = Shot.Left;
-        static readonly DateOnly DateOfBirth = new DateOnly(1994, 01, 14);
-        string ToStringValue = $"{FirstName},{LastName},{JerseyNumber},{PlayerPosition},{PlayerShot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy")},{BirthPlace}";
+        static readonly DateOnly DateOfBirth = new DateOnly(1994, 01, 04);
+        string ToStringValue = $"{FirstName},{LastName},{JerseyNumber},{PlayerPosition},{PlayerShot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy", CultureInfo.InvariantCulture)},{BirthPlace}";
         readonly int Age = (DateOnly.FromDateTime(DateTime.Now).DayNumber - DateOfBirth.DayNumber) / 365;
 
         //[Fact]
