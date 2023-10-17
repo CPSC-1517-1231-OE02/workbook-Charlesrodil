@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Hockey.Data;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace Hockey.Test
@@ -16,7 +17,7 @@ namespace Hockey.Test
         const Position PlayerPosition = Position.Center;
         const Shot PlayerShot = Shot.Left;
         static readonly DateOnly DateOfBirth = new DateOnly(1994, 01, 14);
-        const string ToStringValue = $"{FirstName} {LastName}";
+        string ToStringValue = $"{FirstName},{LastName},{JerseyNumber},{PlayerPosition},{PlayerShot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy")},{BirthPlace}";
         readonly int Age = (DateOnly.FromDateTime(DateTime.Now).DayNumber - DateOfBirth.DayNumber) / 365;
 
         //[Fact]
@@ -27,7 +28,7 @@ namespace Hockey.Test
 
         public HockeyPlayer CreateTestHockeyPlayer()
         {
-            return new HockeyPlayer(FirstName, LastName, BirthPlace, DateOfBirth, WeightInPounds, HeightInInches, PlayerPosition, PlayerShot);
+            return new HockeyPlayer(FirstName, LastName, JerseyNumber, BirthPlace, DateOfBirth, WeightInPounds, HeightInInches, PlayerPosition, PlayerShot);
         }
 
         [Fact]
@@ -78,6 +79,18 @@ namespace Hockey.Test
             actual = player.JerseyNumber;
 
             
+        }
+
+        [Fact]
+        public void HockeyPlayer_Parse_ParsesCorrectly()
+        {
+            HockeyPlayer actual;
+            string line = $"{FirstName},{LastName},{JerseyNumber},{PlayerPosition},{PlayerShot},{HeightInInches},{WeightInPounds},{DateOfBirth.ToString("MMM-dd-yyyy")},{BirthPlace}";
+
+            actual = HockeyPlayer.Parse(line);
+
+            actual.Should().BeOfType<HockeyPlayer>();
+
         }
 
 
