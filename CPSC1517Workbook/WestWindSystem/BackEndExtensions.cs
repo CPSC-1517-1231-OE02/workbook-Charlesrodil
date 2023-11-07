@@ -18,10 +18,24 @@ namespace WestWindSystem
 			services.AddTransient<CustomerServices>((ServiceProvider) =>
 			{
 				var context = ServiceProvider.GetService<WestWindContext>();
-
+				
 				return new CustomerServices(context!);
 			});
 
-		}
+            services.AddTransient<CategoryServices>((ServiceProvider) =>
+            {
+                var context = ServiceProvider.GetService<WestWindContext>();
+
+                return new CategoryServices(context!);
+            });
+
+            services.AddTransient<ProductServices>((ServiceProvider) =>
+            {
+                var context = ServiceProvider.GetService<WestWindContext>();
+
+                return new ProductServices(context!);
+            });
+
+        }
 	}
 }
