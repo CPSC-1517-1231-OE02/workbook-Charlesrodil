@@ -1,0 +1,154 @@
+﻿@using BMIWebApp.Data
+@page "/RecordBMI"
+
+<h3>Record BMI</h3>
+
+<div class="my-4">
+
+    @*Full Name Input group*@
+    <div class="mb-3 d-flex gap-4">
+        <div class="mb-3">
+            <label class="form-label" for="first-name">First Name</label>
+            <input class="form-control @(ErrorList.ContainsKey("EmptyFirstName")? "is-invalid":"")" type="text" id="first-name" autocomplete="off" @bind="FirstName" />
+            @if (ErrorList.ContainsKey("EmptyFirstName"))
+            {
+                <div class="alert alert-danger">@ErrorList["EmptyFirstName"]</div>
+            }
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="last-name">Last Name</label>
+            <input class="form-control  @(ErrorList.ContainsKey("EmptyLastName")? "is-invalid":"")" type="text" id="last-name" autocomplete="off" @bind="LastName" />
+            @if (ErrorList.ContainsKey("EmptyLastName"))
+            {
+                <div class="alert alert-danger">@ErrorList["EmptyLastName"]</div>
+            }
+        </div>
+    </div>
+
+    @*Weight and Height Input group*@
+    <div class="mb-3 d-flex gap-4">
+        <div class="mb-3">
+            <label class="form-label" for="height">Height in Inches</label>
+            <input class="form-control  @(ErrorList.ContainsKey("InvalidHeight")? "is-invalid":"") @(ErrorList.ContainsKey("EmptyHeight")? "is-invalid":"")" type="number" id="height" @bind="Height" />
+            @if (ErrorList.ContainsKey("InvalidHeight"))
+            {
+                <div class="alert alert-danger">@ErrorList["InvalidHeight"]</div>
+            }
+            @if (ErrorList.ContainsKey("EmptyHeight"))
+            {
+                <div class="alert alert-danger">@ErrorList["EmptyHeight"]</div>
+            }
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="weight">Weight in Pounds</label>
+            <input class="form-control  @(ErrorList.ContainsKey("InvalidWeight")? "is-invalid":"") @(ErrorList.ContainsKey("EmptyWeight")? "is-invalid":"")" type="number" id="weight" @bind="Weight" />
+            @if (ErrorList.ContainsKey("InvalidWeight"))
+            {
+                <div class="alert alert-danger">@ErrorList["InvalidWeight"]</div>
+            }
+            @if (ErrorList.ContainsKey("EmptyWeight"))
+            {
+                <div class="alert alert-danger">@ErrorList["EmptyWeight"]</div>
+            }
+        </div>
+    </div>
+
+    @*Button Group*@
+    <div>
+        <button class="btn btn-success" @onclick="HandleSubmit">Record Data</button>
+        <button class="btn btn-danger" type="reset" @onclick="ClearPage">Clear Data</button>
+        <a class="btn btn-primary" href="/BMIReport">Go to Records Page</a>
+    </div>
+
+
+</div>
+
+
+@code {
+    //Full Name
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+
+    //Height / Weight
+    public double? Height { get; set; }
+    public double? Weight { get; set; }
+
+    //FilePath
+    [Inject]
+    public IWebHostEnvironment WebHostEnvironment { get; set; }
+    public string File { get; set; }
+
+    //Error Dictionary holding Key value pairs of different errors
+    public Dictionary<string, string> ErrorList { get; set; } = new();
+
+    //On Initialize set the location of the file to the property of File
+    protected override void OnInitialized()
+    {
+        File = $@"{WebHostEnvironment.ContentRootPath}\Data\PeopleRecord.csv";
+
+        base.OnInitialized();
+    }
+
+    public void ClearPage()
+    {
+        FirstName = null;
+        LastName = null;
+        Height = null;
+        Weight = null;
+        ErrorList.Clear();
+    }
+
+    public void HandleSubmit()
+    {
+        ErrorList.Clear();
+
+        if (string.IsNullOrWhiteSpace(FirstName))
+        {
+            ErrorList.Add("EmptyFirstName", "First Name cannot be null, empty, or whitespace!");
+        }
+
+        if (string.IsNullOrWhiteSpace(LastName))
+        {
+            ErrorList.Add("EmptyLastName", "Last Name cannot be null, empty, or whitespace!");
+        }
+
+        if (Height <= 0)
+        {
+            ErrorList.Add("InvalidHeight", "Height cannot be equal or less than 0!");
+
+        }
+
+        if (string.IsNullOrEmpty(Height.ToString()))
+        {
+            ErrorList.Add("EmptyHeight", "Height cannot be null, empty, or whitespace!");
+
+        }
+
+        if (Weight <= 0)
+        {
+            ErrorList.Add("InvalidWeight", "Weight cannot be equal or less than 0!");
+
+        }
+
+        if (string.IsNullOrEmpty(Weight.ToString()))
+        {
+            ErrorList.Add("EmptyWeight", "Weight cannot be null, empty, or whitespace!");
+
+        }
+
+        if (ErrorList.Count == 0)
+        {
+            using (StreamWriter writer = new StreamWriter(File, append: true))
+            {
+                BodyMass person = new BodyMass(FirstName, LastName, Height ?? 0, Weight ?? 0);
+
+                writer.WriteLine(person.ToString());
+            }
+
+            ClearPage();
+        }
+        
+    }
+
+
+}

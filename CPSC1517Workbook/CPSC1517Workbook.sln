@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWindWebApp", "WestWindW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWindConsoleApp", "WestWindConsoleApp\WestWindConsoleApp.csproj", "{BA6F2995-6A42-4F65-8E57-E4367B240AFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMIWebApp", "BMIWebApp\BMIWebApp.csproj", "{507C0BC4-863F-449C-B6C3-91F9D8DB1953}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{BA6F2995-6A42-4F65-8E57-E4367B240AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA6F2995-6A42-4F65-8E57-E4367B240AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6F2995-6A42-4F65-8E57-E4367B240AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507C0BC4-863F-449C-B6C3-91F9D8DB1953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507C0BC4-863F-449C-B6C3-91F9D8DB1953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507C0BC4-863F-449C-B6C3-91F9D8DB1953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507C0BC4-863F-449C-B6C3-91F9D8DB1953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
