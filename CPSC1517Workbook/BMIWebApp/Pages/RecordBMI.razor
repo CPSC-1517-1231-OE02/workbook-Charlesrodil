@@ -60,6 +60,16 @@
         <a class="btn btn-primary" href="/BMIReport">Go to Records Page</a>
     </div>
 
+    @if (ErrorList.ContainsKey("DataOverload"))
+    {
+        <div class="alert alert-danger my-3">@ErrorList["DataOverload"]</div>
+    }
+
+    @if (ErrorList.ContainsKey("DupePerson"))
+    {
+        <div class="alert alert-danger my-3">@ErrorList["DupePerson"]</div>
+    }
+
 
 </div>
 
@@ -78,6 +88,9 @@
     public IWebHostEnvironment WebHostEnvironment { get; set; }
     public string File { get; set; }
 
+    //Persons collection
+    public List<BodyMass>? People { get; set; } = new();
+
     //Error Dictionary holding Key value pairs of different errors
     public Dictionary<string, string> ErrorList { get; set; } = new();
 
@@ -85,6 +98,27 @@
     protected override void OnInitialized()
     {
         File = $@"{WebHostEnvironment.ContentRootPath}\Data\PeopleRecord.csv";
+
+        using (StreamReader reader = new StreamReader(File))
+        {
+            string currentLine;
+
+            while ((currentLine = reader.ReadLine()) != null)
+            {
+                try
+                {
+                    BodyMass person = null;
+
+                    if ((person = BodyMass.Parse(currentLine)) != null)
+                    {
+                        People.Add(person);
+                    }
+                }
+                catch (Exception e)
+                {
+                }
+            }
+        }
 
         base.OnInitialized();
     }
@@ -134,6 +168,16 @@
         {
             ErrorList.Add("EmptyWeight", "Weight cannot be null, empty, or whitespace!");
 
+        }
+
+        if (People.Count >= 5)
+        {
+            ErrorList.Add("DataOverload","Cannot add more than 5 people to the record!");
+        }
+
+        if (People.Exists(item => $"{item.FirstName} {item.LastName}" == $"{FirstName} {LastName}"))
+        {
+            ErrorList.Add("DupePerson", "Person already exists!");
         }
 
         if (ErrorList.Count == 0)
