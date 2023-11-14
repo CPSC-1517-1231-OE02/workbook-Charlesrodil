@@ -1,8 +1,5 @@
-﻿@page "/category-products"
-@page "/category-products/{CategoryId}"
-
-@using WestWindSystem.BLL
-@using WestWindSystem.Entities
+﻿@page "/products"
+@page "/products/{CategoryId}"
 
 <h3>Category Products</h3>
 
@@ -17,13 +14,26 @@
 				{
 					@foreach (var category in Categories)
 					{
-						<option value="@category.CategoryId">@category.Description</option>
+						<option value="@category.CategoryId">@category.CategoryName</option>
 					}
 				}				
 			</select>
 		</div>
 		<div class="cols-12">
 			<button class="btn btn-primary" @onclick="HandleCategorySelect" >Get Products</button>
+		</div>
+	</div>
+</fieldset>
+
+<fieldset class="mb-3">
+	<legend>Search for products</legend>
+	<div class="row row-cols-lg-auto g-3 align-items-center">
+		<div class="cols-12">
+			<label class="visually-hidden" for="search">Search:</label>
+			<input type="text" class="form-control" id="search" @bind="PartialSearch">
+		</div>
+		<div class="cols-12">
+			<button class="btn btn-primary" @onclick="HandlePartialSearch">Search for Products</button>
 		</div>
 	</div>
 </fieldset>
@@ -36,6 +46,7 @@
 				<th>Product ID</th>
 				<th>Product Name</th>
 				<th>Discontinued</th>
+				<th>Supplier</th>
 				<th>Unit Price</th>
 			</tr>
 		</thead>
@@ -46,51 +57,10 @@
 					<td>@products.ProductId</td>
 					<td>@products.ProductName</td>
 					<td>@products.Discontinued</td>
+					<td>@products.Supplier.CompanyName</td>
 					<td class="text-end">@($"{products.UnitPrice:C}")</td>
 				</tr>
 			}
 		</tbody>
 	</table>
-}
-
-
-@code {
-	[Inject]
-	CategoryServices CategoryServices { get; set; }
-	[Inject]
-	ProductServices ProductServices { get; set; }
-	[Inject]
-	NavigationManager NavigationManager { get; set; }
-
-	public List<Category>? Categories { get; set; } = null;
-	public List<Product>? Products { get; set; } = null;
-
-	[Parameter]
-	public string? CategoryId { get; set; } = null;
-
-	protected override void OnInitialized()
-	{
-		Categories = CategoryServices.GetAllCategories();
-		if (CategoryId != null)
-		{
-			HandleCategorySelect();
-
-			// Alternatively you can use
-			// Products = ProductServices.GetProductsByCategoryID(int.Parse(CategoryId));
-		}
-
-		base.OnInitialized();
-	}
-
-	private void HandleCategorySelect()
-	{
-		if (CategoryId != null)
-		{
-			Products = ProductServices.GetProductsByCategoryID(int.Parse(CategoryId));
-			NavigationManager.NavigateTo($"/category-products/{CategoryId}");
-		}
-
-
-	}
-
 }

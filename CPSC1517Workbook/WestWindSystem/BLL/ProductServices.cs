@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,17 @@ namespace WestWindSystem.BLL
 
 
         //Returns products with a matching category ID and puts it into a list
-        public List<Product> GetProductsByCategoryID(int id) 
-        { 
-            return _context.Products.Where(p => p.CategoryId == id).ToList<Product>();  
+        public List<Product> GetProductsByCategoryID(int id)
+        {
+            return _context.Products.Where(p => p.CategoryId == id).Include(p => p.Supplier).ToList<Product>();
         }
 
+        public List<Product> GetProductsByNameOrCategoryName(string partial)
+        {
+            partial = partial.ToLower();
+            return _context.Products.Where(p => p.ProductName.ToLower().Contains(partial) || p.Category.CategoryName.ToLower().Contains(partial))
+                .Include(p => p.Supplier)
+                .ToList<Product>();
+        }
     }
 }
