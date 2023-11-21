@@ -1,9 +1,9 @@
 ﻿@page "/products"
 @page "/products/{CategoryId}"
 
-<h3>Category Products</h3>
+<h3>Products</h3>
 
-<fieldset class="mb-3">
+<fieldset class="my-3">
 	<legend>Category Selection</legend>
 	<div class="row row-cols-lg-auto g-3 align-items-center">
 		<div class="cols-12">
@@ -38,6 +38,10 @@
 	</div>
 </fieldset>
 
+<div class="my-3">
+	<a class="btn btn-success" href="/product">Add New Product</a>
+</div>
+
 @if (Products != null)
 {
 	<table class="table table-striped">
@@ -54,7 +58,7 @@
 			@foreach (var products in Products)
 			{
 				<tr>
-					<td>@products.ProductId</td>
+					<td><a href="/product/@products.ProductId">View / Edit</a></td>
 					<td>@products.ProductName</td>
 					<td>@products.Discontinued</td>
 					<td>@products.Supplier.CompanyName</td>
